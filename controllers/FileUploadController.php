@@ -10,20 +10,54 @@ use yii\web\UploadedFile;
 
 class FileUploadController extends Controller
 {
-    public function behaviors()
-    {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-            ]
-        );
-    }
+
+    // this behaviour is for  all  user login and  logout user both  can access  everything  form this controller 
+
+                    // public function behaviors()
+                    // {
+                    //     return array_merge(
+                    //         parent::behaviors(),
+                    //         [
+                    //             'verbs' => [
+                    //                 'class' => VerbFilter::className(),
+                    //                 'actions' => [
+                    //                     'delete' => ['POST'],
+                    //                 ],
+                    //             ],
+                    //         ]
+                    //     );
+                    // }
+
+
+
+
+
+    // this behivour is for  authrozition  user  which is authroized  for  CRUD  opreation 
+
+                    // public function behaviors()
+                    // {
+                    //     return [
+                    //         'access' => [
+                    //             'class' => AccessControl::class,
+                    //             'rules' => [
+                    //                 [
+                    //                     // Restrict all actions to authenticated users
+                    //                     'allow' => true,
+                    //                     'roles' => ['@'], // '@' means only logged-in users can access
+                    //                 ],
+                    //             ],
+                    //         ],
+                    //         'verbs' => [
+                    //             'class' => VerbFilter::class,
+                    //             'actions' => [
+                    //                 'logout' => ['post'],
+                    //                 'delete' => ['post'], // Ensure DELETE action uses POST
+                    //             ],
+                    //         ],
+                    //     ];
+                    // }
+
+
 
     public function actionIndex()
     {
@@ -46,10 +80,10 @@ class FileUploadController extends Controller
     {
         $model = new FileUpload();
         if ($model->load(Yii::$app->request->post())) {
-            $file = UploadedFile::getInstance($model, 'file_path');  
+            $file = UploadedFile::getInstance($model, 'file_path');
             if ($file) {
                 $filePath = 'uploads/' . uniqid() . '.' . $file->extension;
-                if ($file->saveAs($filePath)) {  
+                if ($file->saveAs($filePath)) {
                     $model->file_path = $filePath;
                 }
             }
