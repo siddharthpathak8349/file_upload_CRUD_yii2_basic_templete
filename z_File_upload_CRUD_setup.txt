@@ -1,0 +1,33 @@
+** install basic  templete
+
+** cookeyValidationKey   &&  conect  DB
+
+** create migration :- php yii migrate/create create_file_upload_table
+
+                         public function safeUp()
+                            {
+                                $this->createTable('{{%file_upload}}', [
+                                    'id' => $this->primaryKey(),
+                                    'file_name' => $this->string()->notNull(),
+                                    'file_path' => $this->string()->notNull(),
+                                    'uploaded_at' => $this->timestamp()->defaultExpression('CURRENT_TIMESTAMP'),
+                                ]);
+                            }
+
+                        public function safeDown()
+                            {
+                                $this->dropTable('{{%file_upload}}');
+                            }
+
+
+**  php yii migrate
+
+** create Model :- php yii gii/model --tableName=file_upload --modelClass=FileUpload
+
+** create  "Uplods" Folder :- (1)-> mkdir web/uploads   
+                              (2)-> chmod 777 web/uploads
+
+** create CRUD  :- Copy  Code form Github  (CRUD)
+
+**  Also  Create  .gitignore  file inside project  (to prevent web\uploads  to push in  Repo)
+
